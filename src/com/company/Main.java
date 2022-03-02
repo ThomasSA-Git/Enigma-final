@@ -6,50 +6,67 @@ import java.util.Scanner;
 public class Main {
 
   char[] alphabet = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'Æ', 'Ø', 'Å'};
+  int shiftValue = 2;
+  String text = " ";
 
   public void runProgram() {
 
   }
 
-  public String typeText() {
+  public void typeText() {
     Scanner sc = new Scanner(System.in);
     System.out.println("Indtast teksten du ønsker at kryptere/afkryptere");
-    String text = sc.next();
-    return text;
+    text = sc.next();
+    stringToChar(text);
   }
 
   public void stringToChar(String text) {
-
     char[] ch = new char[text.length()];
-
     for (int i = 0; i < text.length(); i++) {
       ch[i] = text.charAt(i);
+    }
+    charToNum(ch);
+  }
 
+  public void charToNum(char[] array) {
+    for (int i = 0; i < array.length; i++) {
+      for (int o = 0; o < alphabet.length; o++) {
+        if (alphabet[o] == array[i]) {
+          int[] valueArray = new int[text.length()];
+          valueArray[i] = o;
+          newNumValue(valueArray);
+        }
+      }
     }
 
   }
 
-  public void charToNum() {
-    for(int i = 0; i < alphabet.length; i++){
-      if(alphabet[i] == ){
-        return ;
+  public void newNumValue(int[] newValueArray) {
+    for (int i = 0; i < newValueArray.length; i++) {
+      newValueArray[i] += shiftValue;
+      if (newValueArray[i] > newValueArray.length) {
+        newValueArray[i] -= newValueArray.length;
+      }
+
+    }
+    numToChar(newValueArray);
+  }
+
+  public void numToChar(int[] newValue) {
+  for (int i = 0; i < newValue.length; i++){
+    for (int o = 0; o < alphabet.length; i++){
+      if(alphabet[o] == newValue[i]){
+        char[] newChar = new char[newValue.length];
+        newChar[i] = alphabet[o];
       }
     }
   }
 
-  public void newNumValue() {
+}
 
-  }
-
-  public void newValue() {
-
-  }
-
-  public void numToChar() {
-
-  }
-
+  /*
   public void charToString() {
+
 
   }
 
@@ -72,6 +89,11 @@ Brug unicode til displacement (shift)
   public static void main(String[] args) {
     Main obj = new Main();
 
-    obj.stringToChar(obj.typeText());
+    obj.stringToChar();
+    obj.charToNum();
+    //obj.newNumValue();
+    //obj.numToChar();
+    //System.out.println(obj.charToString());
+
   }
 }
