@@ -1,5 +1,6 @@
 package com.company;
 
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Main {
@@ -10,9 +11,10 @@ public class Main {
 
   public void runProgram() {
     System.out.println("Velkommen til Enigma. Her kan du kryptere eller dekryptere en tekst ved hjælp af Caesar Cipher");
-    System.out.println("Ønsker du at:\n" +
-        "1. Kryptere\n" +
-        "2. Dekryptere");
+    System.out.println("""
+        Ønsker du at:
+        1. Kryptere
+        2. Dekryptere""");
     int choice = sc.nextInt();
 
     System.out.println("Indtast herunder hvor mange pladser du ønsker at shifte din tekst:");
@@ -32,7 +34,7 @@ public class Main {
   public String typeText() {
     System.out.println("Indtast teksten herunder:");
     String text = sc.next();
-    return text;
+    return text.toUpperCase();
   }
 
   public char[] stringToChar(String text) {
@@ -59,44 +61,57 @@ public class Main {
   }
 
   public int[] encryptNewNumValue(int[] newValueArray) {
+        int[] encryptValueArray = new int[newValueArray.length];
     for (int i = 0; i < newValueArray.length; i++) {
-      newValueArray[i] += shiftValue;
-      if (newValueArray[i] > newValueArray.length) {
-        newValueArray[i] -= newValueArray.length;
+      encryptValueArray[i] = newValueArray[i] + shiftValue;
+      if (encryptValueArray[i] > alphabet.length) {
+        encryptValueArray[i] += alphabet.length;
       }
+      if(encryptValueArray[i] < 0){
+        encryptValueArray[i] += alphabet.length;
+
+      }
+      System.out.println(encryptValueArray);
     }
-    return newValueArray;
+    return encryptValueArray;
   }
 
   public int[] decryptNewNumValue(int[] newValueArray) {
+    int[] decryptValueArray = new int[newValueArray.length];
     for (int i = 0; i < newValueArray.length; i++) {
-      newValueArray[i] += shiftValue;
-      if (newValueArray[i] > newValueArray.length) {
-        newValueArray[i] -= newValueArray.length;
+      decryptValueArray[i] = newValueArray[i] - shiftValue;
+      if (decryptValueArray[i] > alphabet.length) {
+        decryptValueArray[i] += alphabet.length;
       }
+      if(decryptValueArray[i] < 0){
+        decryptValueArray[i] += alphabet.length;
+
+      }
+
     }
-    return newValueArray;
+    return decryptValueArray;
   }
 
   public char[] numToChar(int[] newValue) {
     char[] newChar = new char[newValue.length];
     for (int i = 0; i < newValue.length; i++) {
       newChar[i] = alphabet[newValue[i]];
+      System.out.println(alphabet[newValue[i]]);
     }
     return newChar;
   }
 
 
   public void encryptCharToString(char[] arrayToString) {
-    String cryptedText = String.valueOf(arrayToString);
-    System.out.println("Her er resultatet af krypteringen:\n" + cryptedText);
+    String encryptedText = String.valueOf(arrayToString);
+    System.out.println("Her er resultatet af krypteringen:\n" + encryptedText);
     System.out.println("Programmet genstartes nu.");
     runProgram();
   }
 
   public void decryptCharToString(char[] arrayToString) {
-    String cryptedText = String.valueOf(arrayToString);
-    System.out.println("Her er resultatet af dekrypteringen:\n" + cryptedText);
+    String decryptedText = String.valueOf(arrayToString);
+    System.out.println("Her er resultatet af dekrypteringen:\n" + decryptedText);
     System.out.println("Programmet genstartes nu.");
     runProgram();
   }
