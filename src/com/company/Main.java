@@ -1,7 +1,5 @@
 package com.company;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -16,8 +14,12 @@ public class Main {
         "1. Kryptere\n" +
         "2. Dekryptere");
     int choice = sc.nextInt();
+
+    System.out.println("Indtast herunder hvor mange pladser du ønsker at shifte din tekst:");
+    shiftValue = sc.nextInt();
+
     if (choice == 1) {
-      cryptCharToString(numToChar(cryptNewNumValue(charToNum(stringToChar(typeText())))));
+      encryptCharToString(numToChar(encryptNewNumValue(charToNum(stringToChar(typeText())))));
     }
     if (choice == 2) {
       decryptCharToString(numToChar(decryptNewNumValue(charToNum(stringToChar(typeText())))));
@@ -43,30 +45,25 @@ public class Main {
   }
 
   public int[] charToNum(char[] charArray) {
-
     int[] valueArray = new int[charArray.length];
     for (int i = 0; i < charArray.length; i++) {
-      char test = charArray[i];
       for (int o = 0; o < alphabet.length; o++) {
-        char test2 = alphabet[5];
 
-        if (test == test2) {        //Der er en fejl i loopet, muligvis ved if der gør at valueArray ikke får tilføjet den rette index
-          System.out.println(test2);
+        //Den ignorerer det her if-statement, og jeg ved ikke hvorfor. Så den overfylder valueArray og giver fejl.
+        if (alphabet[o] == charArray[i]) {
           valueArray[i] = o;
         }
       }
     }
-
     return valueArray;
   }
 
-  public int[] cryptNewNumValue(int[] newValueArray) {
+  public int[] encryptNewNumValue(int[] newValueArray) {
     for (int i = 0; i < newValueArray.length; i++) {
       newValueArray[i] += shiftValue;
       if (newValueArray[i] > newValueArray.length) {
         newValueArray[i] -= newValueArray.length;
       }
-
     }
     return newValueArray;
   }
@@ -77,7 +74,6 @@ public class Main {
       if (newValueArray[i] > newValueArray.length) {
         newValueArray[i] -= newValueArray.length;
       }
-
     }
     return newValueArray;
   }
@@ -85,25 +81,24 @@ public class Main {
   public char[] numToChar(int[] newValue) {
     char[] newChar = new char[newValue.length];
     for (int i = 0; i < newValue.length; i++) {
-      for (int o = 0; o < alphabet.length; i++) {
-        if (alphabet[o] == newValue[i]) {
-
-          newChar[i] = alphabet[o];
-        }
-      }
+      newChar[i] = alphabet[newValue[i]];
     }
     return newChar;
   }
 
 
-  public void cryptCharToString(char[] arrayToString) {
+  public void encryptCharToString(char[] arrayToString) {
     String cryptedText = String.valueOf(arrayToString);
     System.out.println("Her er resultatet af krypteringen:\n" + cryptedText);
+    System.out.println("Programmet genstartes nu.");
+    runProgram();
   }
 
   public void decryptCharToString(char[] arrayToString) {
     String cryptedText = String.valueOf(arrayToString);
     System.out.println("Her er resultatet af dekrypteringen:\n" + cryptedText);
+    System.out.println("Programmet genstartes nu.");
+    runProgram();
   }
 
   public static void main(String[] args) {
