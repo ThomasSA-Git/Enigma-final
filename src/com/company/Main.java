@@ -71,7 +71,6 @@ public class Main {
         encryptValueArray[i] += alphabet.length;
 
       }
-      System.out.println(encryptValueArray);
     }
     return encryptValueArray;
   }
